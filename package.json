@@ -1,0 +1,19 @@
+{
+  "name": "testgithubactions",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://lesterthomas:4f2d3d4501f6b13953d04f7e0b182de48786bfb8@github.com/LesterThomas/testgithubactions.git"
+  },
+  "author": "Lester Thomas",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/LesterThomas/testgithubactions/issues"
+  },
+  "homepage": "https://github.com/LesterThomas/testgithubactions#readme"
+}
