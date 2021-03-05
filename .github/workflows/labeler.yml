@@ -13,9 +13,7 @@ jobs:
           script: |
             # Create comment body as Markdown
 
-            var msg = `👋 Thanks for participating! I will review as soon as possible, usually within a few hours.
-
-            **Watch for notifications** as I may request some small changes to make sure this meets the guidelines.`
+            var msg = `👋 Thanks for participating! I will review as soon as possible, usually within a few hours.`
 
             # Get pull request description
             var body = context.payload.pull_request.body
@@ -24,7 +22,6 @@ jobs:
             # related to being from a contributor
             if(body) {
               var isContribution = body.contains('New Submission')
-              var incompleteGuidelines = body.contains('[]')
             }
 
             if(isContribution) {
@@ -42,16 +39,5 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 labels: ['enhancement']
-              })
-
-              # If missed checking guidelines,
-              # add 'invalid' label
-              if(incompleteGuidelines) {
-                github.issues.addLabels({
-                  issue_number: context.issue.number,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  labels: ['invalid']
-                })
-              }
+              })   
             }
