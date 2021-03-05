@@ -13,7 +13,7 @@ jobs:
           script: |
             # Create comment body as Markdown
 
-            var msg = `👋 Thanks for participating! I will review as soon as possible, usually within a few hours.`
+            var msg = '👋 Thanks for participating! I will review as soon as possible, usually within a few hours.'
 
             # Get pull request description
             var body = context.payload.pull_request.body
