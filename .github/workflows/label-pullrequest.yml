@@ -17,7 +17,11 @@ jobs:
 
             const graphql_response = await github.graphql('{ resource(url: "' + pull_request.data.html_url + '") { ... on PullRequest { timelineItems(itemTypes: [CONNECTED_EVENT, DISCONNECTED_EVENT], first: 100) { nodes { ... on ConnectedEvent { id subject { ... on Issue { number }}} ... on DisconnectedEvent { id subject { ... on Issue { number }}}}}}}}')
             console.log({graphql_response: graphql_response.resource.timelineItems.nodes})
+            graphql_response.resource.timelineItems.nodes.forEach(function (node, index) {
+              console.log({node: node})
 
+            })
+            
             
             //console.log(pull_request.data[0].url)
             //const commit = await github.request(url)
