@@ -16,7 +16,7 @@ jobs:
             console.log({pull_request: pull_request.data.html_url})
 
             const graphql_response = await github.graphql('{ resource(url: "' + pull_request.data.html_url + '") { ... on PullRequest { timelineItems(itemTypes: [CONNECTED_EVENT, DISCONNECTED_EVENT], first: 100) { nodes { ... on ConnectedEvent { id subject { ... on Issue { number }}} ... on DisconnectedEvent { id subject { ... on Issue { number }}}}}}}}')
-            console.log({graphql_response: graphql_response.resource.timelineItems})
+            console.log({graphql_response: graphql_response.resource.timelineItems.nodes})
 
             
             //console.log(pull_request.data[0].url)
