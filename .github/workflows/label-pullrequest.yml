@@ -14,15 +14,18 @@ jobs:
             const pull_request = await github.request(context.payload.pull_request.url)
             //console.log({pull_request: pull_request.data})
             console.log({pull_request: pull_request.data.html_url})
-
+            // For each issue there may be a CONNECTED_EVENT and/or a DISCONNECTED_EVENT on the timeline and in the comments. We need to
+            // count for each event type and if the total is Odd, the issue is connected and if Even it is not connected.
+            // query the timeline for this pull request. 
             const graphql_response = await github.graphql('{ resource(url: "' + pull_request.data.html_url + '") { ... on PullRequest { timelineItems(itemTypes: [CONNECTED_EVENT, DISCONNECTED_EVENT], first: 100) { nodes { ... on ConnectedEvent { id subject { ... on Issue { number }}} ... on DisconnectedEvent { id subject { ... on Issue { number }}}}}}}}')
-            console.log({graphql_response: graphql_response.resource.timelineItems.nodes})
             graphql_response.resource.timelineItems.nodes.forEach(function (node, index) {
-              console.log({node: node})
-
+              console.log({timeline_node: node})
             })
-            
-            
+            // query for the comments
+            const comments = await github.request(context.payload.pull_request.review_comments_url)
+            comments.forEach( function (comment, index) {
+              console.log({comment: comment})
+            }
             //console.log(pull_request.data[0].url)
             //const commit = await github.request(url)
             //console.log(commit.data)
