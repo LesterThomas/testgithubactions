@@ -9,11 +9,14 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            console.log(context.payload.pull_request.number)
-            console.log(context.payload.pull_request.commits)
+            // console.log(context.payload.pull_request.number)
+            // console.log(context.payload.pull_request.commits)
             const url = context.payload.pull_request.commits_url
-            const result = await github.request(url)
-            console.log(result)
-            console.log(result.data)
-            console.log(result.data[0].commit)
-            console.log(result.data[0].url)
+            const pull_request = await github.request(url)
+            // console.log(pull_request)
+            console.log(pull_request.data)
+            // console.log(pull_request.data[0].commit)
+            console.log(pull_request.data[0].url)
+            const commit = await github.request(url)
+            console.log(commit.data)
+
