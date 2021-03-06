@@ -12,10 +12,10 @@ jobs:
             // console.log(context.payload.pull_request.number)
             // console.log(context.payload.pull_request.commits)
             const pull_request = await github.request(context.payload.pull_request.url)
-            console.log({pull_request: pull_request.data})
+            //console.log({pull_request: pull_request.data})
 
             const graphql_response = await github.graphql('{ resource(url: "https://github.com/LesterThomas/testgithubactions/pull/33") { ... on PullRequest { timelineItems(itemTypes: [CONNECTED_EVENT, DISCONNECTED_EVENT], first: 100) { nodes { ... on ConnectedEvent { id subject { ... on Issue { number }}} ... on DisconnectedEvent { id subject { ... on Issue { number }}}}}}}}')
-            console.log({graphql_response: graphql_response.data.resource.timelineitems})
+            console.log({graphql_response: graphql_response.resource})
 
             
             //console.log(pull_request.data[0].url)
