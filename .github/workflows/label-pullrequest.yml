@@ -10,6 +10,7 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             console.log(context.payload.pull_request.number)
+            console.log(context.payload.pull_request.commits)
             const diff_url = context.payload.pull_request.diff_url
             const result = await github.request(diff_url)
             console.log(result)
