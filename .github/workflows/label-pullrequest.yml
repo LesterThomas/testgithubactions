@@ -8,12 +8,6 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            console.log(owner:$owner)
-            console.log(name:$name)
-            console.log(context.payload.pull_request.self)
-            console.log(context.payload.pull_request.number)
-            console.log(context.repo.owner)
-            console.log(context.repo.repo)
             github.issues.addLabels({
               issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,
