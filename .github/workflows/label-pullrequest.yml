@@ -11,7 +11,7 @@ jobs:
           script: |
             // console.log(context.payload.pull_request.number)
             // console.log(context.payload.pull_request.commits)
-            const url = context.payload.pull_request.issue_url
+            const url = context.payload.pull_request.events_url
             const pull_request = await github.request(url)
             console.log(pull_request.data)
             //console.log(pull_request.data[0].url)
