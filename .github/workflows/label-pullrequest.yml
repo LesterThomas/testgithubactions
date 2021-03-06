@@ -14,3 +14,6 @@ jobs:
             const url = context.payload.pull_request.commits_url
             const result = await github.request(url)
             console.log(result)
+            console.log(result.data)
+            console.log(result.data[0].commit)
+            console.log(result.data[0].url)
