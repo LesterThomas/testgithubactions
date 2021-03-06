@@ -8,9 +8,9 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.addLabels({
-              issue_number: context.payload.pull_request.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              labels: ['bug']
-            })
+            console.log(owner:$owner)
+            console.log(name:$name)
+            console.log(context.payload.pull_request.self)
+            console.log(context.payload.pull_request.number)
+            console.log(context.repo.owner)
+            console.log(context.repo.repo)
