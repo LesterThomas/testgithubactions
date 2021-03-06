@@ -17,7 +17,10 @@ jobs:
             console.log({pull_request_issue: pull_request_issue.data})
             const pull_request_events = await github.request(pull_request_issue.data.events_url)
             console.log({events: pull_request_events.data})
+            const graphql_response = await github.graphql('query { viewer { login } }')
+            console.log({graphql_response: graphql_response})
 
+            
             //console.log(pull_request.data[0].url)
             //const commit = await github.request(url)
             //console.log(commit.data)
