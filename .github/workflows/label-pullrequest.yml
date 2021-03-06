@@ -11,10 +11,9 @@ jobs:
           script: |
             // console.log(context.payload.pull_request.number)
             // console.log(context.payload.pull_request.commits)
-            const url = context.payload.pull_request.url
-            const pull_request = await github.request(url)
-            console.log({events_url: pull_request.data.events_url})
-            const pull_request_events = await github.request(pull_request.data.events_url)
+            const pull_request_issue = await github.request(context.payload.pull_request.issues_url)
+            console.log({events_url: pull_request_issue.data.events_url})
+            const pull_request_events = await github.request(pull_request_issue.data.events_url)
             console.log({events: pull_request_events.data})
 
             //console.log(pull_request.data[0].url)
