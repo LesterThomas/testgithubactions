@@ -14,6 +14,7 @@ jobs:
             const pull_request = await github.request(context.payload.pull_request.url)
             //console.log({pull_request: pull_request.data})
             console.log({pull_request: pull_request.data.html_url})
+            //
             // For each issue there may be a CONNECTED_EVENT and/or a DISCONNECTED_EVENT on the timeline and may be 
             // mentioned with a # in the pr body. We need to
             // count for each event type and if the total is Odd, the issue is connected and if Even it is not connected.
@@ -22,21 +23,20 @@ jobs:
             var linked_issues={}
             graphql_response.resource.timelineItems.nodes.forEach(function (node, index) {
               const issue_no = node.subject.number
-              console.log({issue_no: issue_no})
+              //console.log({issue_no: issue_no})
               if (linked_issues[issue_no]){
                 delete linked_issues[issue_no]
               } else {
                 linked_issues[issue_no] = true
               }
-              
             })
             // query for the body
-            console.log({pull_request: pull_request.data.body})
+            //console.log({pull_request: pull_request.data.body})
             const regex = /#([0-9]+)/g;
             const found = pull_request.data.body.match(regex);
             found.forEach(function (item, index) {
               var issue_no=item.substring(1)            
-              console.log({issue_no: issue_no})
+              //console.log({issue_no: issue_no})
               if (linked_issues[issue_no]){
                 delete linked_issues[issue_no]
               } else {
@@ -46,4 +46,12 @@ jobs:
             console.log({ linked_issues: linked_issues})
             //const commit = await github.request(url)
             //console.log(commit.data)
+            const repository_url = pull_request.head.repo.url
+            console.log(repository_url)
+            linked_issues.forEach( function (item, index) {
+              console.log(repository_url + '/' + index)
+              const issue = await github.request(repository_url + '/' + index)
+              linked_issues[index] = issue
+            })
+            console.log({ linked_issues: linked_issues})
 
