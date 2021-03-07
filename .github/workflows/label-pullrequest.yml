@@ -19,6 +19,7 @@ jobs:
             // query the timeline for this pull request. 
             const graphql_response = await github.graphql('{ resource(url: "' + pull_request.data.html_url + '") { ... on PullRequest { timelineItems(itemTypes: [CONNECTED_EVENT, DISCONNECTED_EVENT], first: 100) { nodes { ... on ConnectedEvent { id subject { ... on Issue { number }}} ... on DisconnectedEvent { id subject { ... on Issue { number }}}}}}}}')
             var linked_issues={}
+            console.log({timeline_nodes: graphql_response.resource.timelineItems.nodes})
             graphql_response.resource.timelineItems.nodes.forEach(function (node, index) {
               const issue_no = node.subject.number
               if (linked_issues[issue_no]){
@@ -30,6 +31,7 @@ jobs:
             // query for the body
             const regex = /#([0-9]+)/g;
             const found = pull_request.data.body.match(regex);
+            console.log({found: found})
             found.forEach(function (item, index) {
               var issue_no=item.substring(1)            
               if (linked_issues[issue_no]){
@@ -44,6 +46,7 @@ jobs:
               const issue = await github.request(repository_url + '/issues/' + index)
               linked_issues[index] = issue
               const issue_labels = await github.request(repository_url + '/issues/' + index + '/labels')
+              console.log({issue_labels: issue_labels.data})
               issue_labels.data.forEach( function (item, index) {
                 labels[item.name] = item.url
               })
