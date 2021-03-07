@@ -58,5 +58,5 @@ jobs:
             // add labels array to this pull request
             if (labels_array.length>0) {
               github.request('POST ' + repository_url + '/issues/' + pull_request.data.number + '/labels', {labels:labels_array})
-           }
+            }
 
