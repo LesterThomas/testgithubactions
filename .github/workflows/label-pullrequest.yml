@@ -71,11 +71,6 @@ jobs:
               repo: context.repo.repo,
               labels: labels_array
             })
-            github.request('POST ' + repository_url + '/issues/' + pull_request.data.number + '/labels', {
-              issue_number: pull_request.data.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              labels: labels_array
-            })
+            github.request('POST ' + repository_url + '/issues/' + pull_request.data.number + '/labels', labels_array)
            
 
