@@ -51,11 +51,22 @@ jobs:
               const issue = await github.request(repository_url + '/issues/' + index)
               linked_issues[index] = issue
               const issue_labels = await github.request(repository_url + '/issues/' + index + '/labels')
-              console.log({issue_labels: issue_labels})
+              //console.log({issue_labels: issue_labels})
               issue_labels.data.forEach( function (item, index) {
                 labels[item.name] = item.url
               })
             }
-            console.log({ linked_issues: linked_issues})
+            //console.log({ linked_issues: linked_issues})
             console.log({ labels: labels})
+            labels_array = []
+            for (const index in labels) {
+              labels_array.push[index]
+            }
+            github.issues.addLabels({
+              issue_number: pull_request.data.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: labels_array
+            })
+            
 
