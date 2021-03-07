@@ -48,7 +48,7 @@ jobs:
             //console.log(commit.data)
             const repository_url = pull_request.head.repo.url
             console.log(repository_url)
-            linked_issues.forEach( function (item, index) {
+            linked_issues.forEach( async function (item, index) {
               console.log(repository_url + '/' + index)
               const issue = await github.request(repository_url + '/' + index)
               linked_issues[index] = issue
