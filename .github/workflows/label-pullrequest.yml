@@ -63,6 +63,7 @@ jobs:
               labels_array.push[index]
               console.log({index: index})
             }
+            console.log({labels_array: labels_array})
             console.log('POST ' + repository_url + '/issues/' + pull_request.data.number + '/labels')
             console.log({
               issue_number: pull_request.data.number,
