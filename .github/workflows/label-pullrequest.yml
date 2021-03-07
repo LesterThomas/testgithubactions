@@ -61,6 +61,7 @@ jobs:
             labels_array = []
             for (const index in labels) {
               labels_array.push[index]
+              console.log({index: index})
             }
             github.issues.addLabels({
               issue_number: pull_request.data.number,
