@@ -21,16 +21,29 @@ jobs:
             const graphql_response = await github.graphql('{ resource(url: "' + pull_request.data.html_url + '") { ... on PullRequest { timelineItems(itemTypes: [CONNECTED_EVENT, DISCONNECTED_EVENT], first: 100) { nodes { ... on ConnectedEvent { id subject { ... on Issue { number }}} ... on DisconnectedEvent { id subject { ... on Issue { number }}}}}}}}')
             var linked_issues={}
             graphql_response.resource.timelineItems.nodes.forEach(function (node, index) {
-              console.log({timeline_node: node})
+              const issue_no = node.subject.number
+              console.log({issue_no: issue_no})
+              if (linked_issues[issue_no]){
+                delete linked_issues[issue_no]
+              } else {
+                linked_issues[issue_no] = true
+              }
+              
             })
             // query for the body
             console.log({pull_request: pull_request.data.body})
             const regex = /#([0-9]+)/g;
             const found = pull_request.data.body.match(regex);
             found.forEach(function (item, index) {
-              var newItem=item.substring(1)
-              console.log({newItem: newItem})
+              var issue_no=item.substring(1)            
+              console.log({issue_no: issue_no})
+              if (linked_issues[issue_no]){
+                delete linked_issues[issue_no]
+              } else {
+                linked_issues[issue_no] = true
+              }
             })
+            console.log({ linked_issues: linked_issues})
             //const commit = await github.request(url)
             //console.log(commit.data)
 
