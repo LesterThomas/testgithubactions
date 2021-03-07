@@ -32,14 +32,16 @@ jobs:
             const regex = /#([0-9]+)/g;
             const found = pull_request.data.body.match(regex);
             console.log({found: found})
-            found.forEach(function (item, index) {
-              var issue_no=item.substring(1)            
-              if (linked_issues[issue_no]){
-                delete linked_issues[issue_no]
-              } else {
-                linked_issues[issue_no] = true
-              }
-            })
+            if (found) {
+              found.forEach(function (item, index) {
+                var issue_no=item.substring(1)            
+                if (linked_issues[issue_no]){
+                  delete linked_issues[issue_no]
+                } else {
+                  linked_issues[issue_no] = true
+                }
+              })
+            }
             const repository_url = pull_request.data.head.repo.url
             labels={}
             for (const index in linked_issues) {
