@@ -48,11 +48,9 @@ jobs:
                 labels[item.name] = item.url
               })
             }
-            console.log({ labels: labels})
             var labels_array = []
             for (const index in labels) {
               labels_array.push(index)
-              console.log({index: index})
             }
             console.log({labels_array: labels_array})
             // add labels array to this pull request
