@@ -49,8 +49,8 @@ jobs:
             const repository_url = pull_request.data.head.repo.url
             console.log(repository_url)
             for (const index in linked_issues) {
-              console.log(repository_url + '/' + index)
-              const issue = await github.request(repository_url + '/' + index)
+              console.log(repository_url + '/issues/' + index)
+              const issue = await github.request(repository_url + '/issues/' + index)
               linked_issues[index] = issue
             }
             console.log({ linked_issues: linked_issues})
