@@ -63,11 +63,18 @@ jobs:
               labels_array.push[index]
               console.log({index: index})
             }
-            github.issues.addLabels({
+            console.log('POST ' + repository_url + '/issues/' + pull_request.data.number + '/labels')
+            console.log({
               issue_number: pull_request.data.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               labels: labels_array
             })
-            
+            github.request('POST ' + repository_url + '/issues/' + pull_request.data.number + '/labels', {
+              issue_number: pull_request.data.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: labels_array
+            })
+           
 
