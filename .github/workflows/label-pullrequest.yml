@@ -58,9 +58,9 @@ jobs:
             }
             //console.log({ linked_issues: linked_issues})
             console.log({ labels: labels})
-            labels_array = []
+            var labels_array = []
             for (const index in labels) {
-              labels_array.push[index]
+              labels_array.push(index)
               console.log({index: index})
             }
             console.log({labels_array: labels_array})
