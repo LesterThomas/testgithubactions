@@ -88,6 +88,7 @@ jobs:
             console.log(labels_array)
             // if nothing left in labels_array then auto-approve.
             if (labels_array.length == 0) {
+              console.log(github.steps)
               github.steps.label.outputs.approve = 'true'
             }
       - name: Approve Pull Request
