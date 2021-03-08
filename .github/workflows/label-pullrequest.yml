@@ -72,8 +72,8 @@ jobs:
       - name: Approve Pull Request
         id: approve
         if: "!contains(github.event.issue.labels.*.name, 'feature')"
-        uses: juliangruber/approve-pull-request-action@v1
+        uses: juliangruber/merge-pull-request-action@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           number: 1
-
+          method: squash
