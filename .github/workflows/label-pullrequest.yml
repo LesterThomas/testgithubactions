@@ -76,3 +76,11 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           number: 1
+      - name: Merge Pull Request
+        id: merge
+        if: "! contains(github.event.issue.labels.*.name, 'feature')"
+        uses: juliangruber/merge-pull-request-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          number: 1
+          method: squash
