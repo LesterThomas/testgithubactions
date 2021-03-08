@@ -88,12 +88,12 @@ jobs:
             console.log(labels_array)
             // if nothing left in labels_array then auto-approve.
             if (labels_array.length == 0) {
-              console.log(github.steps)
-              github.steps.label.outputs.approve = 'true'
+              console.log(steps)
+              steps.label.outputs.approve = 'true'
             }
       - name: Approve Pull Request
         id: approve
-        if: ${{ github.steps.label.outputs.approve == 'true' }}
+        if: ${{ steps.label.outputs.approve == 'true' }}
         uses: juliangruber/approve-pull-request-action@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
