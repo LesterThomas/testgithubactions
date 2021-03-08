@@ -14,6 +14,7 @@ jobs:
         with:
           message: 'Error! No linked issues found. Please edit your pull request to mention issues that it closes (using close #<issue_id>).'
       - name: Label Pull Request
+        id: label
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -68,4 +69,31 @@ jobs:
             if (labels_array.length>0) {
               github.request('POST ' + repository_url + '/issues/' + pull_request.data.number + '/labels', {labels:labels_array})
             }
-
+            // depending on the labels, decide whether we can auto-approve.
+            const auto_approved = ['documentation', 'bug-fix', 'refactor']
+            Array.prototype.remove = function() {
+              var what, a = arguments, L = a.length, ax
+              while (L && this.length) {
+                what = a[--L]
+                while ((ax = this.indexOf(what)) !== -1) {
+                  this.splice(ax, 1)
+                }
+              }
+              return this;
+            }
+            console.log(labels_array)
+            auto_approved.forEach( function (item, index) {
+              labels_array.remove(item)
+            })
+            console.log(labels_array)
+            // if nothing left in labels_array then auto-approve.
+            if (labels_array.length == 0) {
+              github.steps.label.outputs.approve = 'true'
+            }
+      - name: Approve Pull Request
+        id: approve
+        if: ${{ github.steps.label.outputs.approve == 'true' }}
+        uses: juliangruber/approve-pull-request-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          number: 1
