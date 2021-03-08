@@ -75,7 +75,7 @@ jobs:
         with:
           github-token:  ${{secrets.GITHUB_TOKEN}}
           script: |
-            console.log(github.event.issue.labels)
+            console.log(github.event.label)
             const pullRequest = context.payload.pull_request
             const repository = context.repo
             await github.pulls.merge({
