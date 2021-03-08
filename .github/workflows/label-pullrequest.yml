@@ -68,10 +68,15 @@ jobs:
             // add labels array to this pull request
             if (labels_array.length>0) {
               github.request('POST ' + repository_url + '/issues/' + pull_request.data.number + '/labels', {labels:labels_array})
-            }            
+            }          
+      - name: check for pull request labels
+        uses: jesusvasquez333/verify-pr-label-action@v1.4.0
+        with:
+          github-token: '${{ secrets.GITHUB_TOKEN }}'          
+          valid-labels: 'bug, documentation, refactor'
+          invalid-labels: 'feature'
       - name: "Merge pull request"
         uses: "actions/github-script@v3"
-        if: "!contains(github.event.issue.labels.*.name, 'feature')"
         with:
           github-token:  ${{secrets.GITHUB_TOKEN}}
           script: |
