@@ -67,7 +67,7 @@ jobs:
             console.log({labels_array: labels_array})
             // add labels array to this pull request
             if (labels_array.length>0) {
-              github.request('POST ' + repository_url + '/issues/' + pull_request.data.number + '/labels', {labels:labels_array})
+              await github.request('POST ' + repository_url + '/issues/' + pull_request.data.number + '/labels', {labels:labels_array})
             }  
             // depending on the labels, decide whether we can auto-approve.
             const auto_approved = ['documentation', 'bug-fix', 'refactor']
