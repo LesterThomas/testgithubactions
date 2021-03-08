@@ -69,11 +69,17 @@ jobs:
             if (labels_array.length>0) {
               github.request('POST ' + repository_url + '/issues/' + pull_request.data.number + '/labels', {labels:labels_array})
             }            
-      - name: Approve Pull Request
-        id: approve
+      - name: "Merge pull request"
+        uses: "actions/github-script@v3"
         if: "!contains(github.event.issue.labels.*.name, 'feature')"
-        uses: juliangruber/merge-pull-request-action@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: 1
-          method: squash
+          github-token:  ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const pullRequest = context.payload.pull_request
+            const repository = context.repo
+            await github.pulls.merge({
+              merge_method: "merge",
+              owner: repository.owner,
+              pull_number: pullRequest.number,
+              repo: repository.repo,
+            })        
