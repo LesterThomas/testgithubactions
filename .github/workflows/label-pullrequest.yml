@@ -7,15 +7,14 @@ jobs:
   diff:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v3
+      - name: Verify Linked Issue
+        uses: hattan/verify-linked-issue-action@v1.1.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            console.log(github.event)
-      - name: Execute for pull request comments only
-        if: github.event.issue.pull_request
-        run: echo "This is a pull request comment event"
-      - uses: actions/github-script@v3
+          message: 'Error! No linked issues found. Please edit your pull request to mention issues that it closes (using close #<issue_id>).'
+      - name: Label Pull Request
+        uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
